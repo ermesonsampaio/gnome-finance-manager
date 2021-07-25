@@ -1,0 +1,7 @@
+data/com.ermeso.FinanceManager.desktop.in
+data/com.ermeso.FinanceManager.appdata.xml.in
+data/com.ermeso.FinanceManager.gschema.xml
+src/window.ui
+src/main.js
+src/window.js
+

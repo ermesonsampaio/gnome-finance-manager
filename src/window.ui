@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="4.0"/>
+  <template class="FinanceManagerWindow" parent="GtkApplicationWindow">
+    <property name="default-width">800</property>
+    <property name="default-height">600</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="headerBar">
+        <property name="title-widget">
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Finance Manager</property>
+            <style>
+              <class name="title"/>
+            </style>
+          </object>
+        </property>
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkBox">
+
+        <!-- Sidebar -->
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="can_focus">1</property>
+            <property name="min-content-width">300</property>
+            <property name="hscrollbar-policy">never</property>
+            <property name="halign">start</property>
+
+            <child>
+              <object class="GtkBox">
+                <property name="width-request">150</property>
+
+                <child>
+                  <object class="GtkListBox">
+                    <property name="hexpand">true</property>
+                    <property name="vexpand">true</property>
+                    <property name="selection_mode">browse</property>
+
+                    <child>
+                      <object class="GtkListBoxRow" id="actions_row">
+                        <property name="can_focus">1</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="margin-top">10</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <property name="spacing">6</property>
+
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon-name">list-add-symbolic</property>
+                                <property name="pixel-size">16</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="hexpand">True</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Actions</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkSeparator"/>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <!-- Stack -->
+        <child>
+          <object class="GtkStack" id="stack">
+          <property name="hexpand">True</property>
+          <child>
+            <object class="GtkStackPage">
+              <property name="name">actions</property>
+              <property name="child">
+                <object class="GtkBox">
+                  <property name="orientation">vertical</property>
+                  <property name="spacing">12</property>
+                  <property name="halign">start</property>
+                  <property name="valign">center</property>
+
+                  <!-- Buttons -->
+                  <child>
+                    <object class="GtkBox">
+                      <property name="spacing">8</property>
+
+                        <child>
+                          <object class="GtkButton" id="cash_inflow">
+                            <property name="label" translatable="yes">Cash Inflow</property>
+                            <property name="hexpand">True</property>
+                            <style>
+                              <class name="suggested-action" />
+                            </style>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkButton" id="cash_outflow">
+                            <property name="label" translatable="yes">Cash Outflow</property>
+                            <property name="hexpand">True</property>
+                            <style>
+                              <class name="destructive-action" />
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- Profit section -->
+                    <child>
+                      <object class="GtkBox">
+                        <property name="spacing">8</property>
+
+                        <child>
+                          <object class="GtkButton">
+                            <property name="height-request">150</property>
+                            <property name="width-request">150</property>
+                            <property name="halign">center</property>
+                            <property name="sensitive">False</property>
+
+                            <property name="child">
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">15</property>
+                                <property name="halign">center</property>
+                                <property name="valign">center</property>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">Cash Inflow</property>
+                                    <attributes>
+                                      <attribute name="weight" value="500"/>
+                                      <attribute name="scale" value="1.1"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">100</property>
+                                    <attributes>
+                                      <attribute name="weight" value="300"/>
+                                      <attribute name="scale" value="3.1"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkButton">
+                            <property name="height-request">150</property>
+                            <property name="width-request">150</property>
+                            <property name="halign">center</property>
+                            <property name="sensitive">False</property>
+
+                            <property name="child">
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">15</property>
+                                <property name="halign">center</property>
+                                <property name="valign">center</property>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">Outfit</property>
+                                    <attributes>
+                                      <attribute name="weight" value="500"/>
+                                      <attribute name="scale" value="1.1"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">50</property>
+                                    <attributes>
+                                      <attribute name="weight" value="300"/>
+                                      <attribute name="scale" value="3.1"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkButton">
+                            <property name="height-request">150</property>
+                            <property name="width-request">150</property>
+                            <property name="halign">center</property>
+                            <property name="sensitive">False</property>
+
+                            <property name="child">
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">15</property>
+                                <property name="halign">center</property>
+                                <property name="valign">center</property>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">Cash Outflow</property>
+                                    <attributes>
+                                      <attribute name="weight" value="500"/>
+                                      <attribute name="scale" value="1.1"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">50</property>
+                                    <attributes>
+                                      <attribute name="weight" value="300"/>
+                                      <attribute name="scale" value="3.1"/>
+                                    </attributes>
+                                  </object>
+                                </child>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
