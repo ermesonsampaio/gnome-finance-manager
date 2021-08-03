@@ -247,22 +247,27 @@
               </object>
             </child>
 
+            <!-- Register Cash Flow Page -->
             <child>
               <object class="GtkStackPage">
                 <property name="name">register_cash_flow</property>
                 <property name="child">
                   <object class="GtkBox">
+                    <property name="orientation">vertical</property>
                     <property name="halign">center</property>
                     <property name="valign">center</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">8</property>
+                    <property name="spacing">20</property>
                     <child>
-                      <object class="GtkBox">
-                        <property name="hexpand">True</property>
-                        <property name="spacing">150</property>
+                      <object class="GtkGrid">
+                        <property name="column-spacing">100</property>
+                        <property name="row-spacing">12</property>
                         <child>
                           <object class="GtkLabel">
                             <property name="label" translatable="yes">Value</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">0</property>
+                            </layout>
                           </object>
                         </child>
 
@@ -271,30 +276,45 @@
                             <property name="hexpand">True</property>
                             <property name="numeric">True</property>
                             <property name="adjustment">cashflow_adjustment</property>
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">Type</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">1</property>
+                            </layout>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkComboBoxText">
+                            <items>
+                              <item translatable="yes">Inflow</item>
+                              <item translatable="yes">Outflow</item>
+                            </items>
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">1</property>
+                            </layout>
                           </object>
                         </child>
                       </object>
                     </child>
 
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkButton">
+                        <property name="label" translatable="yes">Done</property>
                         <property name="hexpand">True</property>
-                        <property name="spacing">150</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="label" translatable="yes">Type</property>
-                          </object>
-                        </child>
-
-                        <child>
-                          <object class="GtkComboBoxText">
-                            <property name="width-request">80</property>
-                            <items>
-                              <item translatable="yes">Inflow</item>
-                              <item translatable="yes">Outflow</item>
-                            </items>
-                          </object>
-                        </child>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
                       </object>
                     </child>
                   </object>
@@ -309,6 +329,7 @@
 
   <object class="GtkAdjustment" id="cashflow_adjustment">
     <property name="lower">0</property>
+    <property name="upper">1000000</property>
     <property name="value">0</property>
     <property name="step_increment">1</property>
   </object>
