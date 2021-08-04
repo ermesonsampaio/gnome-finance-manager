@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=finance_manager
+Name=Finance Manager
 Exec=com.ermeso.FinanceManager
 Icon=com.ermeso.FinanceManager
 Terminal=false
