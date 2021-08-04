@@ -8,5 +8,5 @@
 ## TODO
 
 - [x] Main page
-- [ ] Cash flow register page
+- [x] Cash flow register page
 
