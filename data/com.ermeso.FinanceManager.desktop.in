@@ -4,5 +4,5 @@ Exec=com.ermeso.FinanceManager
 Icon=com.ermeso.FinanceManager
 Terminal=false
 Type=Application
-Categories=GTK;
+Categories=Finance;
 StartupNotify=true

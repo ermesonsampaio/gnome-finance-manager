@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="finance_manager">
 	<schema id="com.ermeso.FinanceManager" path="/com/ermeso/FinanceManager/">
+	  <key name="inflow" type="d">
+      <default>0</default>
+    </key>
+
+	  <key name="outflow" type="d">
+      <default>0</default>
+    </key>
 	</schema>
 </schemalist>

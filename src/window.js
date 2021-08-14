@@ -19,8 +19,7 @@ var FinanceManagerWindow = GObject.registerClass({
   _init(application) {
     super._init({ application });
 
-    this._cash_inflow = 0;
-    this._cash_outflow = 0;
+    this._settings = Gio.Settings.new_with_path('com.ermeso.FinanceManager', '/com/ermeso/FinanceManager/');
     this._update_profit();
 
     this._cash_inflow_label.label = this._cash_inflow.toString();
@@ -43,10 +42,10 @@ var FinanceManagerWindow = GObject.registerClass({
     const type = this._cash_flow_type.get_active_text().toLowerCase();
 
     if (type === 'inflow') {
-      this._cash_inflow += value;
+      this._settings.set_double('inflow', value + this._cash_inflow);
       this._update_profit();
     } else {
-      this._cash_outflow += value;
+      this._settings.set_double('outflow', value + this._cash_outflow);
       this._update_profit();
     }
 
@@ -54,6 +53,8 @@ var FinanceManagerWindow = GObject.registerClass({
   }
 
   _update_profit() {
+    this._cash_inflow = this._settings.get_double('inflow');
+    this._cash_outflow = this._settings.get_double('outflow');
     this._profit = Number((this._cash_inflow - this._cash_outflow).toFixed(2));
 
     this._profit_label.label = this._profit.toString();
