@@ -9,6 +9,5 @@ An app to manage finances.
 - [x] Main page
 - [x] Cash flow register page
 - [x] Save data
+- [ ] Show history
 - [ ] Reset data
-- [ ] Show history of months
-
