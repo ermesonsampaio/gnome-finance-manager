@@ -2,7 +2,7 @@ const { GObject, Gtk, Gio, Json } = imports.gi;
 
 var FinanceManagerWindow = GObject.registerClass({
   GTypeName: 'FinanceManagerWindow',
-  Template: 'resource:///com/ermeso/FinanceManager/window.ui',
+  Template: 'resource:///com/ermeso/FinanceManager/ui/window.ui',
   InternalChildren: [
     'sidebar',
     'listbox',
@@ -48,8 +48,9 @@ var FinanceManagerWindow = GObject.registerClass({
         case 'sidebar_home':
           if(this._sidebar_home.is_selected()) this._stack.visible_child_name = 'main';
           break;
-        // case 'sidebar_historic':
-        //   break;
+        case 'sidebar_historic':
+          if(this._sidebar_historic.is_selected()) this._stack.visible_child_name = 'historic';
+          break;
       }
     });
   }
