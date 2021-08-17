@@ -1,9 +1,13 @@
-const { GObject, Gtk, GLib, Gio } = imports.gi;
+const { GObject, Gtk, Gio, Json } = imports.gi;
 
 var FinanceManagerWindow = GObject.registerClass({
   GTypeName: 'FinanceManagerWindow',
   Template: 'resource:///com/ermeso/FinanceManager/window.ui',
   InternalChildren: [
+    'sidebar',
+    'listbox',
+    'sidebar_home',
+    'sidebar_historic',
     'stack',
     'cash_inflow_button',
     'cash_outflow_button',
@@ -26,13 +30,37 @@ var FinanceManagerWindow = GObject.registerClass({
     this._profit_label.label = this._profit.toString();
     this._cash_outflow_label.label = this._cash_outflow.toString();
 
+    this._listbox.connect('row-activated', this._handleSidebarItemSelected.bind(this));
     this._cash_inflow_button.connect('clicked', () => this._redirect_register_cash_flow(true));
     this._cash_outflow_button.connect('clicked', () => this._redirect_register_cash_flow(false));
-    this._cancel_register_cash_flow_button.connect('clicked', () => this._stack.visible_child_name = 'main');
+    this._cancel_register_cash_flow_button.connect('clicked', this._cancel_register_cash_flow.bind(this));
     this._register_cash_flow_button.connect('clicked', this._register_cash_flow.bind(this));
   }
 
+  _handleSidebarItemSelected() {
+    const items = [
+      'sidebar_home',
+      'sidebar_historic',
+    ];
+
+    items.forEach(item => {
+      switch (item) {
+        case 'sidebar_home':
+          if(this._sidebar_home.is_selected()) this._stack.visible_child_name = 'main';
+          break;
+        // case 'sidebar_historic':
+        //   break;
+      }
+    });
+  }
+
+  _cancel_register_cash_flow() {
+    this._sidebar.reveal_child = true;
+    this._stack.visible_child_name = 'main';
+  }
+
   _redirect_register_cash_flow(inflow) {
+    this._sidebar.reveal_child = false;
     this._stack.visible_child_name = 'register_cash_flow';
     inflow ? this._cash_flow_type.set_active(0) : this._cash_flow_type.set_active(1);
   }
@@ -49,6 +77,7 @@ var FinanceManagerWindow = GObject.registerClass({
       this._update_profit();
     }
 
+    this._sidebar.reveal_child = true;
     this._stack.visible_child_name = 'main';
   }
 

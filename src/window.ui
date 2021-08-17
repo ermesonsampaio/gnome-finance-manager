@@ -16,264 +16,344 @@
         </property>
       </object>
     </child>
-    <!-- Stack -->
     <child>
-      <object class="GtkStack" id="stack">
-      <property name="halign">center</property>
-      <property name="hexpand">True</property>
-      <property name="transition-type">GTK_STACK_TRANSITION_TYPE_SLIDE_UP</property>
-      <property name="transition-duration">300</property>
-      <child>
-        <object class="GtkStackPage">
-          <property name="name">main</property>
-          <property name="child">
-            <object class="GtkBox">
-              <property name="orientation">vertical</property>
-              <property name="spacing">12</property>
-              <property name="halign">start</property>
-              <property name="valign">center</property>
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
 
-              <!-- Buttons -->
-              <child>
-                <object class="GtkBox">
-                  <property name="spacing">8</property>
+        <child>
+          <object class="GtkRevealer" id="sidebar">
+            <property name="reveal-child">True</property>
+            <child>
+              <object class="GtkListBox" id="listbox">
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
+                <property name="selection-mode">browse</property>
 
+                <child>
+                  <object class="GtkListBoxRow" id="sidebar_home">
                     <child>
-                      <object class="GtkButton" id="cash_inflow_button">
-                        <property name="label" translatable="yes">Cash Inflow</property>
-                        <property name="hexpand">True</property>
-                        <style>
-                          <class name="suggested-action" />
-                        </style>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkButton" id="cash_outflow_button">
-                        <property name="label" translatable="yes">Cash Outflow</property>
-                        <property name="hexpand">True</property>
-                        <style>
-                          <class name="destructive-action" />
-                        </style>
+                      <object class="GtkBox">
+                        <property name="margin-top">10</property>
+                        <property name="margin-bottom">10</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">emblem-ok-symbolic</property>
+                            <property name="pixel-size">16</property>
+                            <style>
+                              <class name="dim-label"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="hexpand">1</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Profit</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
                 </child>
 
-                <!-- Profit section -->
                 <child>
-                  <object class="GtkBox">
-                    <property name="spacing">8</property>
-
+                  <object class="GtkListBoxRow" id="sidebar_historic">
                     <child>
-                      <object class="GtkButton">
-                        <property name="height-request">150</property>
-                        <property name="width-request">150</property>
-                        <property name="halign">center</property>
-                        <property name="sensitive">False</property>
-
-                        <property name="child">
-                          <object class="GtkBox">
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">15</property>
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label">Cash Inflow</property>
-                                <attributes>
-                                  <attribute name="weight" value="500"/>
-                                  <attribute name="scale" value="1.1"/>
-                                </attributes>
-                              </object>
-                            </child>
-
-                            <child>
-                              <object class="GtkLabel" id="cash_inflow_label">
-                                <property name="label">0</property>
-                                <attributes>
-                                  <attribute name="weight" value="300"/>
-                                  <attribute name="scale" value="3.1"/>
-                                </attributes>
-                              </object>
-                            </child>
+                      <object class="GtkBox">
+                        <property name="margin-top">10</property>
+                        <property name="margin-bottom">10</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">view-refresh-symbolic</property>
+                            <property name="pixel-size">16</property>
+                            <style>
+                              <class name="dim-label"/>
+                            </style>
                           </object>
-                        </property>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkButton">
-                        <property name="height-request">150</property>
-                        <property name="width-request">150</property>
-                        <property name="halign">center</property>
-                        <property name="sensitive">False</property>
-
-                        <property name="child">
-                          <object class="GtkBox">
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">15</property>
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label">Outfit</property>
-                                <attributes>
-                                  <attribute name="weight" value="500"/>
-                                  <attribute name="scale" value="1.1"/>
-                                </attributes>
-                              </object>
-                            </child>
-
-                            <child>
-                              <object class="GtkLabel" id="profit_label">
-                                <property name="label">0</property>
-                                <attributes>
-                                  <attribute name="weight" value="300"/>
-                                  <attribute name="scale" value="3.1"/>
-                                </attributes>
-                              </object>
-                            </child>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="hexpand">1</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Historic</property>
                           </object>
-                        </property>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkButton">
-                        <property name="height-request">150</property>
-                        <property name="width-request">150</property>
-                        <property name="halign">center</property>
-                        <property name="sensitive">False</property>
-
-                        <property name="child">
-                          <object class="GtkBox">
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">15</property>
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label">Cash Outflow</property>
-                                <attributes>
-                                  <attribute name="weight" value="500"/>
-                                  <attribute name="scale" value="1.1"/>
-                                </attributes>
-                              </object>
-                            </child>
-
-                            <child>
-                              <object class="GtkLabel" id="cash_outflow_label">
-                                <property name="label">0</property>
-                                <attributes>
-                                  <attribute name="weight" value="300"/>
-                                  <attribute name="scale" value="3.1"/>
-                                </attributes>
-                              </object>
-                            </child>
-                          </object>
-                        </property>
+                        </child>
                       </object>
                     </child>
                   </object>
                 </child>
               </object>
-            </property>
+            </child>
           </object>
         </child>
 
-        <!-- Register Cash Flow Page -->
+        <!-- Stack -->
         <child>
-          <object class="GtkStackPage">
-            <property name="name">register_cash_flow</property>
-            <property name="child">
-              <object class="GtkBox">
-                <property name="orientation">vertical</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="spacing">20</property>
-                <child>
-                  <object class="GtkGrid">
-                    <property name="column-spacing">100</property>
-                    <property name="row-spacing">12</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Value</property>
-                        <layout>
-                          <property name="column">0</property>
-                          <property name="row">0</property>
-                        </layout>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkSpinButton" id="cash_flow_value">
-                        <property name="hexpand">True</property>
-                        <property name="numeric">True</property>
-                        <property name="adjustment">cashflow_adjustment</property>
-                        <layout>
-                          <property name="column">1</property>
-                          <property name="row">0</property>
-                        </layout>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Type</property>
-                        <layout>
-                          <property name="column">0</property>
-                          <property name="row">1</property>
-                        </layout>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkComboBoxText" id="cash_flow_type">
-                        <items>
-                          <item translatable="yes">Inflow</item>
-                          <item translatable="yes">Outflow</item>
-                        </items>
-                        <layout>
-                          <property name="column">1</property>
-                          <property name="row">1</property>
-                        </layout>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-
-                <child>
+          <object class="GtkStack" id="stack">
+            <property name="halign">center</property>
+            <property name="hexpand">True</property>
+            <property name="transition-type">GTK_STACK_TRANSITION_TYPE_SLIDE_UP</property>
+            <property name="transition-duration">300</property>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">main</property>
+                <property name="child">
                   <object class="GtkBox">
-                    <property name="hexpand">True</property>
-                    <property name="orientation">horizontal</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">12</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+
+                    <!-- Buttons -->
                     <child>
-                      <object class="GtkButton" id="register_cash_flow_button">
-                        <property name="label" translatable="yes">Register</property>
-                        <property name="hexpand">True</property>
-                        <style>
-                          <class name="suggested-action"/>
-                        </style>
+                      <object class="GtkBox">
+                        <property name="spacing">8</property>
+                          <child>
+                            <object class="GtkButton" id="cash_inflow_button">
+                              <property name="label" translatable="yes">Cash Inflow</property>
+                              <property name="hexpand">True</property>
+                              <style>
+                                <class name="suggested-action"/>
+                              </style>
+                            </object>
+                          </child>
+
+                          <child>
+                            <object class="GtkButton" id="cash_outflow_button">
+                              <property name="label" translatable="yes">Cash Outflow</property>
+                              <property name="hexpand">True</property>
+                              <style>
+                                <class name="destructive-action"/>
+                              </style>
+                            </object>
+                          </child>
+                        </object>
+                      </child>
+
+                      <!-- Profit section -->
+                      <child>
+                        <object class="GtkBox">
+                          <property name="spacing">8</property>
+
+                          <child>
+                            <object class="GtkButton">
+                              <property name="height-request">150</property>
+                              <property name="width-request">150</property>
+                              <property name="halign">center</property>
+                              <property name="sensitive">False</property>
+
+                              <property name="child">
+                                <object class="GtkBox">
+                                  <property name="orientation">vertical</property>
+                                  <property name="spacing">15</property>
+                                  <property name="halign">center</property>
+                                  <property name="valign">center</property>
+
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="label">Cash Inflow</property>
+                                      <attributes>
+                                        <attribute name="weight" value="500"/>
+                                        <attribute name="scale" value="1.1"/>
+                                      </attributes>
+                                    </object>
+                                  </child>
+
+                                  <child>
+                                    <object class="GtkLabel" id="cash_inflow_label">
+                                      <property name="label">0</property>
+                                      <attributes>
+                                        <attribute name="weight" value="300"/>
+                                        <attribute name="scale" value="3.1"/>
+                                      </attributes>
+                                    </object>
+                                  </child>
+                                </object>
+                              </property>
+                            </object>
+                          </child>
+
+                          <child>
+                            <object class="GtkButton">
+                              <property name="height-request">150</property>
+                              <property name="width-request">150</property>
+                              <property name="halign">center</property>
+                              <property name="sensitive">False</property>
+
+                              <property name="child">
+                                <object class="GtkBox">
+                                  <property name="orientation">vertical</property>
+                                  <property name="spacing">15</property>
+                                  <property name="halign">center</property>
+                                  <property name="valign">center</property>
+
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="label">Outfit</property>
+                                      <attributes>
+                                        <attribute name="weight" value="500"/>
+                                        <attribute name="scale" value="1.1"/>
+                                      </attributes>
+                                    </object>
+                                  </child>
+
+                                  <child>
+                                    <object class="GtkLabel" id="profit_label">
+                                      <property name="label">0</property>
+                                      <attributes>
+                                        <attribute name="weight" value="300"/>
+                                        <attribute name="scale" value="3.1"/>
+                                      </attributes>
+                                    </object>
+                                  </child>
+                                </object>
+                              </property>
+                            </object>
+                          </child>
+
+                          <child>
+                            <object class="GtkButton">
+                              <property name="height-request">150</property>
+                              <property name="width-request">150</property>
+                              <property name="halign">center</property>
+                              <property name="sensitive">False</property>
+
+                              <property name="child">
+                                <object class="GtkBox">
+                                  <property name="orientation">vertical</property>
+                                  <property name="spacing">15</property>
+                                  <property name="halign">center</property>
+                                  <property name="valign">center</property>
+
+                                  <child>
+                                    <object class="GtkLabel">
+                                      <property name="label">Cash Outflow</property>
+                                      <attributes>
+                                        <attribute name="weight" value="500"/>
+                                        <attribute name="scale" value="1.1"/>
+                                      </attributes>
+                                    </object>
+                                  </child>
+
+                                  <child>
+                                    <object class="GtkLabel" id="cash_outflow_label">
+                                      <property name="label">0</property>
+                                      <attributes>
+                                        <attribute name="weight" value="300"/>
+                                        <attribute name="scale" value="3.1"/>
+                                      </attributes>
+                                    </object>
+                                  </child>
+                                </object>
+                              </property>
+                            </object>
+                          </child>
+                        </object>
+                      </child>
+                    </object>
+                  </property>
+                </object>
+              </child>
+
+            <!-- Register Cash Flow Page -->
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">register_cash_flow</property>
+                <property name="child">
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="spacing">20</property>
+                    <child>
+                      <object class="GtkGrid">
+                        <property name="column-spacing">100</property>
+                        <property name="row-spacing">12</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">Value</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkSpinButton" id="cash_flow_value">
+                            <property name="hexpand">True</property>
+                            <property name="numeric">True</property>
+                            <property name="adjustment">cashflow_adjustment</property>
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">Type</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">1</property>
+                            </layout>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkComboBoxText" id="cash_flow_type">
+                            <items>
+                              <item translatable="yes">Inflow</item>
+                              <item translatable="yes">Outflow</item>
+                            </items>
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">1</property>
+                            </layout>
+                          </object>
+                        </child>
                       </object>
                     </child>
 
                     <child>
-                      <object class="GtkButton" id="cancel_register_cash_flow_button">
-                        <property name="label" translatable="yes">Cancel</property>
+                      <object class="GtkBox">
                         <property name="hexpand">True</property>
-                        <style>
-                          <class name="destructive-action"/>
-                        </style>
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkButton" id="register_cash_flow_button">
+                            <property name="label" translatable="yes">Register</property>
+                            <property name="hexpand">True</property>
+                            <style>
+                              <class name="suggested-action"/>
+                            </style>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkButton" id="cancel_register_cash_flow_button">
+                            <property name="label" translatable="yes">Cancel</property>
+                            <property name="hexpand">True</property>
+                            <style>
+                              <class name="destructive-action"/>
+                            </style>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
-                </child>
+                </property>
               </object>
-            </property>
+            </child>
           </object>
         </child>
       </object>
