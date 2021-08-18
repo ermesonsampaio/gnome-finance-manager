@@ -354,6 +354,17 @@
                 </property>
               </object>
             </child>
+
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">historic</property>
+                <property name="child">
+                  <object class="GtkBox" id="historic_box">
+                    <property name="orientation">vertical</property>
+                  </object>
+                </property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

@@ -8,5 +8,9 @@
 	  <key name="outflow" type="d">
       <default>0</default>
     </key>
+
+	  <key name="historic" type="s">
+      <default>"[100, 200]"</default>
+    </key>
 	</schema>
 </schemalist>
