@@ -28,6 +28,8 @@ var FinanceManagerWindow = GObject.registerClass({
     this._updateProfit();
     this._loadHistoric();
 
+    this._newHistoricRow();
+
     this._cash_inflow_label.label = this._cash_inflow.toString();
     this._profit_label.label = this._profit.toString();
     this._cash_outflow_label.label = this._cash_outflow.toString();
@@ -80,7 +82,7 @@ var FinanceManagerWindow = GObject.registerClass({
       this._updateProfit();
     }
 
-    this._updateHistoric(value);
+    this._updateHistoric(value, type);
 
     this._sidebar.reveal_child = true;
     this._stack.visible_child_name = 'main';
@@ -99,22 +101,64 @@ var FinanceManagerWindow = GObject.registerClass({
   }
 
   _loadHistoric() {
+    // this._settings.set_string('historic', "[{ 'value': 100, 'type': 'inflow' }]");
     this._historic = Json.from_string(this._settings.get_string('historic'));
 
-    this._historic.get_array().foreach_element((array, index, value) => {
-      const label = new Gtk.Label({ label: Json.to_string(value, false) });
-      this._historic_box.prepend(label);
+    this._historic.get_array().foreach_element((array, index, object) => {
+      const data = object.get_object();
+
+      this._newHistoricRow(data.get_int_member('value'));
     });
   }
 
-  _updateHistoric(value) {
-    this._historic.get_array().add_int_element(value);
+  _updateHistoric(value, type) {
+    this._historic.get_array().add_element(Json.from_string(`{ "value": ${value}, "type": "${type}" }`));
     this._settings.set_string('historic', Json.to_string(this._historic, false));
 
-    log(this._settings.get_string('historic'));
+    this._newHistoricRow(value);
+  }
 
-    const label = new Gtk.Label({ label: value.toString() });
-    this._historic_box.prepend(label);
+  _newHistoricRow(value) {
+    function newLabel(str) {
+      const label = new Gtk.Label();
+      label.label = String(str);
+      label.height_request = 38;
+
+      return label;
+    }
+
+    const button = new Gtk.Button();
+
+    const row = new Gtk.Box({ orientation: 1, spacing: 0 });
+    row.width_request = 300;
+
+    row.append(newLabel('Nome do item'));
+
+    let revealerState = false;
+    const revealer = new Gtk.Revealer();
+    revealer.set_transition_type(4);
+    revealer.set_transition_duration(300);
+    revealer.reveal_child = revealerState;
+
+    const revealerBox = new Gtk.Box({ orientation: 1, spacing: 0 });
+
+    revealerBox.append(new Gtk.Separator());
+    revealerBox.append(newLabel(value));
+    revealerBox.append(new Gtk.Separator());
+    revealerBox.append(newLabel('Data'));
+
+
+    button.connect('clicked', () => {
+      revealerState = !revealerState;
+      revealer.set_reveal_child(revealerState);
+      log(revealer.transition_type);
+    });
+
+    row.append(revealer);
+    revealer.set_child(revealerBox);
+    button.set_child(row);
+
+    this._historic_box.prepend(button);
   }
 });
 

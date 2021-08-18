@@ -10,7 +10,7 @@
     </key>
 
 	  <key name="historic" type="s">
-      <default>"[100, 200]"</default>
+      <default>"[{ 'value': 100, 'type': 'inflow' }]"</default>
     </key>
 	</schema>
 </schemalist>
