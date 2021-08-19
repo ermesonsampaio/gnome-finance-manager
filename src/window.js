@@ -7,7 +7,7 @@ var FinanceManagerWindow = GObject.registerClass({
     'sidebar',
     'listbox',
     'sidebar_home',
-    'sidebar_historic',
+    'sidebar_history',
     'stack',
     'cash_inflow_button',
     'cash_outflow_button',
@@ -16,9 +16,10 @@ var FinanceManagerWindow = GObject.registerClass({
     'cash_outflow_label',
     'register_cash_flow_button',
     'cancel_register_cash_flow_button',
+    'cash_flow_title',
     'cash_flow_value',
     'cash_flow_type',
-    'historic_box',
+    'history_box',
   ],
 }, class FinanceManagerWindow extends Gtk.ApplicationWindow {
   _init(application) {
@@ -26,9 +27,7 @@ var FinanceManagerWindow = GObject.registerClass({
 
     this._settings = Gio.Settings.new_with_path('com.ermeso.FinanceManager', '/com/ermeso/FinanceManager/');
     this._updateProfit();
-    this._loadHistoric();
-
-    this._newHistoricRow();
+    this._loadHistory();
 
     this._cash_inflow_label.label = this._cash_inflow.toString();
     this._profit_label.label = this._profit.toString();
@@ -44,7 +43,7 @@ var FinanceManagerWindow = GObject.registerClass({
   _handleSidebarItemSelected() {
     const items = [
       'sidebar_home',
-      'sidebar_historic',
+      'sidebar_history',
     ];
 
     items.forEach(item => {
@@ -52,8 +51,8 @@ var FinanceManagerWindow = GObject.registerClass({
         case 'sidebar_home':
           if(this._sidebar_home.is_selected()) this._stack.visible_child_name = 'main';
           break;
-        case 'sidebar_historic':
-          if(this._sidebar_historic.is_selected()) this._stack.visible_child_name = 'historic';
+        case 'sidebar_history':
+          if(this._sidebar_history.is_selected()) this._stack.visible_child_name = 'history';
           break;
       }
     });
@@ -71,18 +70,19 @@ var FinanceManagerWindow = GObject.registerClass({
   }
 
   _registerCashFlow() {
+    const title = this._cash_flow_title.get_buffer().text;
     const value = this._cash_flow_value.value;
     const type = this._cash_flow_type.get_active_text().toLowerCase();
+    const date = this._getDate();
 
-    if (type === 'inflow') {
-      this._settings.set_double('inflow', value + this._cash_inflow);
-      this._updateProfit();
-    } else {
-      this._settings.set_double('outflow', value + this._cash_outflow);
-      this._updateProfit();
-    }
+    if(!title && !value && !type) return;
 
-    this._updateHistoric(value, type);
+    const json = `{ "title": "${title}", "value": ${value}, "type": "${type}", "date": "${date}" }`;
+
+    this._history.get_array().add_element(Json.from_string(json));
+
+    this._settings.set_string('history', Json.to_string(this._history, false));
+    this._newHistoryRow(title, value, type, date);
 
     this._sidebar.reveal_child = true;
     this._stack.visible_child_name = 'main';
@@ -100,25 +100,22 @@ var FinanceManagerWindow = GObject.registerClass({
     this._cash_outflow_label.label = this._cash_outflow.toString();
   }
 
-  _loadHistoric() {
-    // this._settings.set_string('historic', "[{ 'value': 100, 'type': 'inflow' }]");
-    this._historic = Json.from_string(this._settings.get_string('historic'));
+  _loadHistory() {
+    this._history = Json.from_string(this._settings.get_string('history'));
 
-    this._historic.get_array().foreach_element((array, index, object) => {
+    this._history.get_array().foreach_element((array, index, object) => {
       const data = object.get_object();
 
-      this._newHistoricRow(data.get_int_member('value'));
+      this._newHistoryRow(
+        data.get_string_member('title'),
+        data.get_int_member('value'),
+        data.get_string_member('type'),
+        data.get_string_member('date'),
+      );
     });
   }
 
-  _updateHistoric(value, type) {
-    this._historic.get_array().add_element(Json.from_string(`{ "value": ${value}, "type": "${type}" }`));
-    this._settings.set_string('historic', Json.to_string(this._historic, false));
-
-    this._newHistoricRow(value);
-  }
-
-  _newHistoricRow(value) {
+  _newHistoryRow(title, value, type, date) {
     function newLabel(str) {
       const label = new Gtk.Label();
       label.label = String(str);
@@ -132,7 +129,7 @@ var FinanceManagerWindow = GObject.registerClass({
     const row = new Gtk.Box({ orientation: 1, spacing: 0 });
     row.width_request = 300;
 
-    row.append(newLabel('Nome do item'));
+    row.append(newLabel(title));
 
     let revealerState = false;
     const revealer = new Gtk.Revealer();
@@ -143,22 +140,34 @@ var FinanceManagerWindow = GObject.registerClass({
     const revealerBox = new Gtk.Box({ orientation: 1, spacing: 0 });
 
     revealerBox.append(new Gtk.Separator());
-    revealerBox.append(newLabel(value));
+    revealerBox.append(newLabel(`Value: ${value}`));
     revealerBox.append(new Gtk.Separator());
-    revealerBox.append(newLabel('Data'));
+    revealerBox.append(newLabel(`Type: ${type}`));
+    revealerBox.append(new Gtk.Separator());
+    revealerBox.append(newLabel(`Created At: ${date}`));
 
 
     button.connect('clicked', () => {
       revealerState = !revealerState;
       revealer.set_reveal_child(revealerState);
-      log(revealer.transition_type);
     });
 
     row.append(revealer);
     revealer.set_child(revealerBox);
     button.set_child(row);
 
-    this._historic_box.prepend(button);
+    this._history_box.prepend(button);
+  }
+
+  _getDate() {
+    var today = new Date();
+    var dd = String(today.getDate());
+    var mm = String(today.getMonth() + 1);
+    var yyyy = today.getFullYear();
+
+    log(mm + '/' + dd + '/' + yyyy);
+
+    return mm + '/' + dd + '/' + yyyy;
   }
 });
 

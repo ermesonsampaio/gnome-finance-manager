@@ -61,7 +61,7 @@
                 </child>
 
                 <child>
-                  <object class="GtkListBoxRow" id="sidebar_historic">
+                  <object class="GtkListBoxRow" id="sidebar_history">
                     <child>
                       <object class="GtkBox">
                         <property name="margin-top">10</property>
@@ -82,7 +82,7 @@
                           <object class="GtkLabel">
                             <property name="hexpand">1</property>
                             <property name="xalign">0</property>
-                            <property name="label" translatable="yes">Historic</property>
+                            <property name="label" translatable="yes">History</property>
                           </object>
                         </child>
                       </object>
@@ -278,10 +278,29 @@
                         <property name="row-spacing">12</property>
                         <child>
                           <object class="GtkLabel">
-                            <property name="label" translatable="yes">Value</property>
+                            <property name="label" translatable="yes">Title</property>
                             <layout>
                               <property name="column">0</property>
                               <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkEntry" id="cash_flow_title">
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">Value</property>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">1</property>
                             </layout>
                           </object>
                         </child>
@@ -293,7 +312,7 @@
                             <property name="adjustment">cashflow_adjustment</property>
                             <layout>
                               <property name="column">1</property>
-                              <property name="row">0</property>
+                              <property name="row">1</property>
                             </layout>
                           </object>
                         </child>
@@ -303,7 +322,7 @@
                             <property name="label" translatable="yes">Type</property>
                             <layout>
                               <property name="column">0</property>
-                              <property name="row">1</property>
+                              <property name="row">2</property>
                             </layout>
                           </object>
                         </child>
@@ -316,7 +335,7 @@
                             </items>
                             <layout>
                               <property name="column">1</property>
-                              <property name="row">1</property>
+                              <property name="row">2</property>
                             </layout>
                           </object>
                         </child>
@@ -354,16 +373,16 @@
               </object>
             </child>
 
-            <!-- Historic Page -->
+            <!-- History Page -->
             <child>
               <object class="GtkStackPage">
-                <property name="name">historic</property>
+                <property name="name">history</property>
                 <property name="child">
                   <object class="GtkScrolledWindow">
                     <property name="valign">center</property>
                     <property name="height-request">400</property>
                     <child>
-                      <object class="GtkBox" id="historic_box">
+                      <object class="GtkBox" id="history_box">
                         <property name="halign">center</property>
                         <property name="valign">center</property>
                         <property name="orientation">vertical</property>
