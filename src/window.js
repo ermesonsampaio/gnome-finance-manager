@@ -26,8 +26,8 @@ var FinanceManagerWindow = GObject.registerClass({
     super._init({ application });
 
     this._settings = Gio.Settings.new_with_path('com.ermeso.FinanceManager', '/com/ermeso/FinanceManager/');
-    this._updateProfit();
     this._loadHistory();
+    this._updateProfit();
 
     this._cash_inflow_label.label = this._cash_inflow.toString();
     this._profit_label.label = this._profit.toString();
@@ -73,26 +73,39 @@ var FinanceManagerWindow = GObject.registerClass({
     const title = this._cash_flow_title.get_buffer().text;
     const value = this._cash_flow_value.value;
     const type = this._cash_flow_type.get_active_text().toLowerCase();
-    const date = this._getDate();
+    const { date, timestamp } = this._getDate();
 
     if(!title && !value && !type) return;
 
-    const json = `{ "title": "${title}", "value": ${value}, "type": "${type}", "date": "${date}" }`;
+    const json = `{ "title": "${title}", "value": ${value}, "type": "${type}", "date": "${date}", "timestamp": "${timestamp}" }`;
 
     this._history.get_array().add_element(Json.from_string(json));
 
     this._settings.set_string('history', Json.to_string(this._history, false));
     this._newHistoryRow(title, value, type, date);
 
+    this._updateProfit();
     this._sidebar.reveal_child = true;
     this._stack.visible_child_name = 'main';
 
+    this._cash_flow_title.get_buffer().set_text('', 0);
     this._cash_flow_value.set_value(0);
   }
 
   _updateProfit() {
-    this._cash_inflow = this._settings.get_double('inflow');
-    this._cash_outflow = this._settings.get_double('outflow');
+    this._cash_inflow = 0;
+    this._cash_outflow = 0;
+
+    this._history.get_array().foreach_element((array, index, object) => {
+      const data = object.get_object();
+
+      if(data.get_string_member('type').toLowerCase() === 'inflow') {
+        this._cash_inflow += data.get_double_member('value');
+      } else {
+        this._cash_outflow += data.get_double_member('value');
+      }
+    });
+
     this._profit = Number((this._cash_inflow - this._cash_outflow).toFixed(2));
 
     this._profit_label.label = this._profit.toString();
@@ -111,11 +124,12 @@ var FinanceManagerWindow = GObject.registerClass({
         data.get_int_member('value'),
         data.get_string_member('type'),
         data.get_string_member('date'),
+        data.get_string_member('timestamp'),
       );
     });
   }
 
-  _newHistoryRow(title, value, type, date) {
+  _newHistoryRow(title, value, type, date, timestamp) {
     function newLabel(str) {
       const label = new Gtk.Label();
       label.label = String(str);
@@ -124,12 +138,10 @@ var FinanceManagerWindow = GObject.registerClass({
       return label;
     }
 
-    const button = new Gtk.Button();
+    const frame = new Gtk.Frame();
 
     const row = new Gtk.Box({ orientation: 1, spacing: 0 });
     row.width_request = 300;
-
-    row.append(newLabel(title));
 
     let revealerState = false;
     const revealer = new Gtk.Revealer();
@@ -145,18 +157,61 @@ var FinanceManagerWindow = GObject.registerClass({
     revealerBox.append(newLabel(`Type: ${type}`));
     revealerBox.append(new Gtk.Separator());
     revealerBox.append(newLabel(`Created At: ${date}`));
+    revealerBox.append(new Gtk.Separator());
 
+    const delButton = new Gtk.Button({ label: 'Delete' });
+    delButton.get_style_context().add_class('destructive-action');
+
+    const dialog = new Gtk.MessageDialog({
+        title: 'Delete?',
+        text: 'This value will be deleted from your data!',
+        buttons: [Gtk.ButtonsType.NONE],
+        transient_for: this,
+    });
+
+    dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+    dialog.add_button('Delete', Gtk.ResponseType.YES);
+
+    dialog.connect('response', (_, res) => {
+      dialog.hide();
+
+      if(res === Gtk.ResponseType.YES) {
+        this._deleteHistoryItem(timestamp);
+        frame.hide();
+      }
+    });
+
+    delButton.connect('clicked', () => dialog.show());
+
+    revealerBox.append(delButton);
+
+    const button = new Gtk.Button({ label: title });
+    button.has_frame = false;
 
     button.connect('clicked', () => {
       revealerState = !revealerState;
       revealer.set_reveal_child(revealerState);
     });
 
+    row.append(button);
     row.append(revealer);
     revealer.set_child(revealerBox);
-    button.set_child(row);
+    frame.set_child(row);
 
-    this._history_box.prepend(button);
+    this._history_box.prepend(frame);
+  }
+
+  _deleteHistoryItem(timestamp) {
+    this._history.get_array().foreach_element((array, index, object) => {
+      const data = object.get_object();
+
+      const obj_timestamp = data.get_string_member('timestamp');
+      if(obj_timestamp === timestamp) {
+        this._history.get_array().remove_element(index);
+        this._settings.set_string('history', Json.to_string(this._history, false));
+        this._updateProfit();
+      }
+    });
   }
 
   _getDate() {
@@ -165,9 +220,10 @@ var FinanceManagerWindow = GObject.registerClass({
     var mm = String(today.getMonth() + 1);
     var yyyy = today.getFullYear();
 
-    log(mm + '/' + dd + '/' + yyyy);
-
-    return mm + '/' + dd + '/' + yyyy;
+    return {
+      date: mm + '/' + dd + '/' + yyyy,
+      timestamp: Date.now(),
+    };
   }
 });
 
