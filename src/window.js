@@ -82,7 +82,7 @@ var FinanceManagerWindow = GObject.registerClass({
     this._history.get_array().add_element(Json.from_string(json));
 
     this._settings.set_string('history', Json.to_string(this._history, false));
-    this._newHistoryRow(title, value, type, date);
+    this._newHistoryRow(title, value, type, date, timestamp);
 
     this._updateProfit();
     this._sidebar.reveal_child = true;
@@ -206,7 +206,7 @@ var FinanceManagerWindow = GObject.registerClass({
       const data = object.get_object();
 
       const obj_timestamp = data.get_string_member('timestamp');
-      if(obj_timestamp === timestamp) {
+      if(obj_timestamp == timestamp) {
         this._history.get_array().remove_element(index);
         this._settings.set_string('history', Json.to_string(this._history, false));
         this._updateProfit();
