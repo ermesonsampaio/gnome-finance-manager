@@ -2,5 +2,6 @@
 <gresources>
   <gresource prefix="/com/ermeso/FinanceManager">
     <file>ui/window.ui</file>
+    <file alias="icons/scalable/actions/dock-left-symbolic.svg">../data/icons/hicolor/symbolic/actions/dock-left-symbolic.svg</file>
   </gresource>
 </gresources>
