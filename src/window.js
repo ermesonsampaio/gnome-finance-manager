@@ -25,7 +25,6 @@ var FinanceManagerWindow = GObject.registerClass({
   _init(application) {
     super._init({ application });
 
-    this._settings = Gio.Settings.new_with_path('com.ermeso.FinanceManager', '/com/ermeso/FinanceManager/');
     this._loadHistory();
     this._updateProfit();
 

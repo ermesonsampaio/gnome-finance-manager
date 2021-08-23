@@ -16,7 +16,7 @@
         </property>
 
         <child>
-          <object class="GtkMenuButton">
+          <object class="GtkButton">
             <property name="icon-name">dock-left-symbolic</property>
           </object>
         </child>
