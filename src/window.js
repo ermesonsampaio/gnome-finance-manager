@@ -4,6 +4,7 @@ var FinanceManagerWindow = GObject.registerClass({
   GTypeName: 'FinanceManagerWindow',
   Template: 'resource:///com/ermeso/FinanceManager/ui/window.ui',
   InternalChildren: [
+    'hide_sidebar_button',
     'sidebar',
     'listbox',
     'sidebar_home',
@@ -28,6 +29,7 @@ var FinanceManagerWindow = GObject.registerClass({
     this._loadHistory();
     this._updateProfit();
 
+    this._hide_sidebar_button.connect('toggled', () => this._sidebar.reveal_child = this._hide_sidebar_button.active);
     this._listbox.connect('row-activated', this._handleSidebarItemSelected.bind(this));
     this._cash_inflow_button.connect('clicked', () => this._redirectRegisterCashFlow(true));
     this._cash_outflow_button.connect('clicked', () => this._redirectRegisterCashFlow(false));
@@ -55,11 +57,13 @@ var FinanceManagerWindow = GObject.registerClass({
 
   _cancelRegisterCashFlow() {
     this._sidebar.reveal_child = true;
+    this._hide_sidebar_button.active = true;
     this._stack.visible_child_name = 'main';
   }
 
   _redirectRegisterCashFlow(inflow) {
     this._sidebar.reveal_child = false;
+    this._hide_sidebar_button.active = false;
     this._stack.visible_child_name = 'register_cash_flow';
     inflow ? this._cash_flow_type.set_active(0) : this._cash_flow_type.set_active(1);
   }

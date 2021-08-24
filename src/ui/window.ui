@@ -16,8 +16,9 @@
         </property>
 
         <child>
-          <object class="GtkButton">
+          <object class="GtkToggleButton" id="hide_sidebar_button">
             <property name="icon-name">dock-left-symbolic</property>
+            <property name="active">True</property>
           </object>
         </child>
 
