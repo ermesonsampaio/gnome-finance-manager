@@ -38,64 +38,69 @@
           <object class="GtkRevealer" id="sidebar">
             <property name="reveal-child">True</property>
             <child>
-              <object class="GtkListBox" id="listbox">
-                <property name="vexpand">true</property>
-                <property name="selection-mode">browse</property>
-                <property name="width-request">200</property>
-
+              <object class="GtkScrolledWindow">
+                <property name="hscrollbar-policy">never</property>
                 <child>
-                  <object class="GtkListBoxRow" id="sidebar_home">
+                  <object class="GtkListBox" id="listbox">
+                    <property name="vexpand">true</property>
+                    <property name="selection-mode">browse</property>
+                    <property name="width-request">200</property>
+
                     <child>
-                      <object class="GtkBox">
-                        <property name="margin-top">10</property>
-                        <property name="margin-bottom">10</property>
-                        <property name="margin-start">10</property>
-                        <property name="margin-end">10</property>
-                        <property name="spacing">6</property>
+                      <object class="GtkListBoxRow" id="sidebar_home">
                         <child>
-                          <object class="GtkImage">
-                            <property name="icon-name">emblem-ok-symbolic</property>
-                            <property name="pixel-size">16</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="hexpand">1</property>
-                            <property name="xalign">0</property>
-                            <property name="label" translatable="yes">Profit</property>
+                          <object class="GtkBox">
+                            <property name="margin-top">10</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <property name="spacing">6</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon-name">emblem-ok-symbolic</property>
+                                <property name="pixel-size">16</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="hexpand">1</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Profit</property>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>
                     </child>
-                  </object>
-                </child>
 
-                <child>
-                  <object class="GtkListBoxRow" id="sidebar_history">
                     <child>
-                      <object class="GtkBox">
-                        <property name="margin-top">10</property>
-                        <property name="margin-bottom">10</property>
-                        <property name="margin-start">10</property>
-                        <property name="margin-end">10</property>
-                        <property name="spacing">6</property>
+                      <object class="GtkListBoxRow" id="sidebar_history">
                         <child>
-                          <object class="GtkImage">
-                            <property name="icon-name">view-refresh-symbolic</property>
-                            <property name="pixel-size">16</property>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="hexpand">1</property>
-                            <property name="xalign">0</property>
-                            <property name="label" translatable="yes">History</property>
+                          <object class="GtkBox">
+                            <property name="margin-top">10</property>
+                            <property name="margin-bottom">10</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">10</property>
+                            <property name="spacing">6</property>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="icon-name">view-refresh-symbolic</property>
+                                <property name="pixel-size">16</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="hexpand">1</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">History</property>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>
