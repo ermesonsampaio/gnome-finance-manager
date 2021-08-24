@@ -28,10 +28,6 @@ var FinanceManagerWindow = GObject.registerClass({
     this._loadHistory();
     this._updateProfit();
 
-    this._cash_inflow_label.label = this._cash_inflow.toString();
-    this._profit_label.label = this._profit.toString();
-    this._cash_outflow_label.label = this._cash_outflow.toString();
-
     this._listbox.connect('row-activated', this._handleSidebarItemSelected.bind(this));
     this._cash_inflow_button.connect('clicked', () => this._redirectRegisterCashFlow(true));
     this._cash_outflow_button.connect('clicked', () => this._redirectRegisterCashFlow(false));
@@ -113,6 +109,7 @@ var FinanceManagerWindow = GObject.registerClass({
   }
 
   _loadHistory() {
+    this._settings = Gio.Settings.new_with_path('com.ermeso.FinanceManager', '/com/ermeso/FinanceManager/');
     this._history = Json.from_string(this._settings.get_string('history'));
 
     this._history.get_array().foreach_element((array, index, object) => {
