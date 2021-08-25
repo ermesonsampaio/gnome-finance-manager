@@ -1,4 +1,4 @@
-const { GObject, Gtk, Gio, Json } = imports.gi;
+const { GObject, Gtk, Gio, GLib, Json } = imports.gi;
 
 var FinanceManagerWindow = GObject.registerClass({
   GTypeName: 'FinanceManagerWindow',
@@ -26,6 +26,8 @@ var FinanceManagerWindow = GObject.registerClass({
   _init(application) {
     super._init({ application });
 
+    this._buildActions();
+
     this._loadHistory();
     this._updateProfit();
 
@@ -36,6 +38,35 @@ var FinanceManagerWindow = GObject.registerClass({
     this._cancel_register_cash_flow_button.connect('clicked', this._cancelRegisterCashFlow.bind(this));
     this._register_cash_flow_button.connect('clicked', this._registerCashFlow.bind(this));
   }
+
+  _buildActions() {
+    const aboutAction = new Gio.SimpleAction({ name: 'about', parameter_type: null });
+    aboutAction.connect('activate', this._showAbout.bind(this));
+
+    this.application.add_action(aboutAction);
+  }
+
+  _showAbout() {
+    const aboutParams = {
+      authors: [
+        'Ermeson Sampaio de Queiroz <sampaioermesonjs@gmail.com>',
+      ],
+      artists: [],
+      translator_credits: 'translator-credits',
+      comments: 'A finance manager',
+      copyright: 'Copyright © 2021 The Finance Manager authors',
+      license_type: Gtk.License.GPL_3_0,
+      logo_icon_name: 'com.ermeso.FinanceManager',
+      version: pkg.version,
+      website_label: 'Learn more about Finance Manager',
+      website: 'https://github.com/ermesonsampaio/gnome-finance-manager',
+      transient_for: this,
+      modal: true,
+    };
+
+    const aboutDialog = new Gtk.AboutDialog(aboutParams);
+    aboutDialog.show();
+  };
 
   _handleSidebarItemSelected() {
     const items = [
