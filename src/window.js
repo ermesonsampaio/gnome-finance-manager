@@ -235,7 +235,6 @@ var FinanceManagerWindow = GObject.registerClass({
 
     this._history_box.prepend(frame);
     this._frames.push(frame);
-    log(this._frames.length);
   }
 
   _deleteHistoryItem(timestamp, frame) {
