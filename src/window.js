@@ -247,7 +247,7 @@ var FinanceManagerWindow = GObject.registerClass({
         this._history.get_array().remove_element(index);
         this._settings.set_string('history', Json.to_string(this._history, false));
         this._updateProfit();
-        this._frame[index].hide();
+        this._frames[index].hide();
       }
     });
   }
