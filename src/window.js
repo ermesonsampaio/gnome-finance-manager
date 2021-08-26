@@ -58,7 +58,6 @@ var FinanceManagerWindow = GObject.registerClass({
       ],
       translator_credits: 'Ermeson Sampaio de Queiroz <sampaioermesonjs@gmail.com>',
       comments: _('A finance manager'),
-      copyright: 'Copyright © 2021 The Finance Manager authors',
       license_type: Gtk.License.GPL_3_0,
       logo_icon_name: 'com.ermeso.FinanceManager',
       program_name: _('Finance Manager'),
