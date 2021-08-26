@@ -28,6 +28,7 @@ var FinanceManagerWindow = GObject.registerClass({
 
     this._buildActions();
 
+    this._frames = [];
     this._loadHistory();
     this._updateProfit();
 
@@ -43,6 +44,10 @@ var FinanceManagerWindow = GObject.registerClass({
     const aboutAction = new Gio.SimpleAction({ name: 'about', parameter_type: null });
     aboutAction.connect('activate', this._showAbout.bind(this));
 
+    const clearHistoryAction = new Gio.SimpleAction({ name: 'clear_history', parameter_type: null });
+    clearHistoryAction.connect('activate', this._clearHistory.bind(this));
+
+    this.application.add_action(clearHistoryAction);
     this.application.add_action(aboutAction);
   }
 
@@ -208,7 +213,6 @@ var FinanceManagerWindow = GObject.registerClass({
 
       if(res === Gtk.ResponseType.YES) {
         this._deleteHistoryItem(timestamp);
-        frame.hide();
       }
     });
 
@@ -230,9 +234,11 @@ var FinanceManagerWindow = GObject.registerClass({
     frame.set_child(row);
 
     this._history_box.prepend(frame);
+    this._frames.push(frame);
+    log(this._frames.length);
   }
 
-  _deleteHistoryItem(timestamp) {
+  _deleteHistoryItem(timestamp, frame) {
     this._history.get_array().foreach_element((array, index, object) => {
       const data = object.get_object();
 
@@ -241,8 +247,38 @@ var FinanceManagerWindow = GObject.registerClass({
         this._history.get_array().remove_element(index);
         this._settings.set_string('history', Json.to_string(this._history, false));
         this._updateProfit();
+        this._frame[index].hide();
       }
     });
+  }
+
+  _clearHistory() {
+    const dialog = new Gtk.MessageDialog({
+      title: 'Clear History?',
+      text: 'This value will be deleted from your data!',
+      buttons: [Gtk.ButtonsType.NONE],
+      transient_for: this,
+    });
+
+    dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+    dialog.add_button('Delete', Gtk.ResponseType.YES);
+
+    dialog.connect('response', (_, res) => {
+      dialog.hide();
+
+      if(res === Gtk.ResponseType.YES) {
+        this._deleteHistoryItem(timestamp);
+      }
+    });
+
+    this._history.get_array().foreach_element((array, index, object) => {
+      const data = object.get_object();
+      this._deleteHistoryItem(data.get_string_member('timestamp'));
+    });
+
+    this._settings.set_string('history', '[]');
+    this._loadHistory();
+    this._updateProfit();
   }
 
   _getDate() {
