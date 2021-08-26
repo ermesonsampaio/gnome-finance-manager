@@ -58,12 +58,12 @@ var FinanceManagerWindow = GObject.registerClass({
       ],
       artists: [],
       translator_credits: 'translator-credits',
-      comments: 'A finance manager',
+      comments: _('A finance manager'),
       copyright: 'Copyright © 2021 The Finance Manager authors',
       license_type: Gtk.License.GPL_3_0,
       logo_icon_name: 'com.ermeso.FinanceManager',
       version: pkg.version,
-      website_label: 'Learn more about Finance Manager',
+      website_label: _('Learn more about Finance Manager'),
       website: 'https://github.com/ermesonsampaio/gnome-finance-manager',
       transient_for: this,
       modal: true,
@@ -188,25 +188,25 @@ var FinanceManagerWindow = GObject.registerClass({
     const revealerBox = new Gtk.Box({ orientation: 1, spacing: 0 });
 
     revealerBox.append(new Gtk.Separator());
-    revealerBox.append(newLabel(`Value: ${value}`));
+    revealerBox.append(newLabel(`${'Value:'} ${value}`));
     revealerBox.append(new Gtk.Separator());
-    revealerBox.append(newLabel(`Type: ${type}`));
+    revealerBox.append(newLabel(`${'Type:'} ${type}`));
     revealerBox.append(new Gtk.Separator());
-    revealerBox.append(newLabel(`Created At: ${date}`));
+    revealerBox.append(newLabel(`${'Created At:'} ${date}`));
     revealerBox.append(new Gtk.Separator());
 
-    const delButton = new Gtk.Button({ label: 'Delete' });
+    const delButton = new Gtk.Button({ label: _('Delete') });
     delButton.get_style_context().add_class('destructive-action');
 
     const dialog = new Gtk.MessageDialog({
-        title: 'Delete?',
-        text: 'This value will be deleted from your data!',
+        title: _('Delete?'),
+        text: _('This value will be deleted from your data!'),
         buttons: [Gtk.ButtonsType.NONE],
         transient_for: this,
     });
 
-    dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
-    dialog.add_button('Delete', Gtk.ResponseType.YES);
+    dialog.add_button(_('Cancel'), Gtk.ResponseType.CANCEL);
+    dialog.add_button(_('Delete'), Gtk.ResponseType.YES);
 
     dialog.connect('response', (_, res) => {
       dialog.hide();
@@ -254,14 +254,14 @@ var FinanceManagerWindow = GObject.registerClass({
 
   _clearHistory() {
     const dialog = new Gtk.MessageDialog({
-      title: 'Clear History?',
-      text: 'This value will be deleted from your data!',
+      title: _('Clear History?'),
+      text: _('This value will be deleted from your data!'),
       buttons: [Gtk.ButtonsType.NONE],
       transient_for: this,
     });
 
-    dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
-    dialog.add_button('Delete', Gtk.ResponseType.YES);
+    dialog.add_button(_('Cancel'), Gtk.ResponseType.CANCEL);
+    dialog.add_button(_('Delete'), Gtk.ResponseType.YES);
 
     dialog.connect('response', (_, res) => {
       dialog.hide();
