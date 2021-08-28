@@ -58,7 +58,7 @@
                             <property name="spacing">6</property>
                             <child>
                               <object class="GtkImage">
-                                <property name="icon-name">emblem-ok-symbolic</property>
+                                <property name="icon-name">object-select-symbolic</property>
                                 <property name="pixel-size">16</property>
                                 <style>
                                   <class name="dim-label"/>
@@ -349,8 +349,8 @@
                         <child>
                           <object class="GtkComboBoxText" id="cash_flow_type">
                             <items>
-                              <item translatable="yes">Inflow</item>
-                              <item translatable="yes">Outflow</item>
+                              <item translatable="yes" id="inflow">Inflow</item>
+                              <item translatable="yes" id="outflow">Outflow</item>
                             </items>
                             <layout>
                               <property name="column">1</property>

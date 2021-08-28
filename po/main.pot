@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-25 21:44-0300\n"
+"POT-Creation-Date: 2021-08-26 13:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/com.ermeso.FinanceManager.desktop.in:3 src/ui/window.ui:11
+#: src/window.js:63
 msgid "Finance Manager"
 msgstr ""
 
@@ -61,7 +62,7 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: src/ui/window.ui:381 src/window.js:208 src/window.js:263
+#: src/ui/window.ui:381 src/window.js:207 src/window.js:261
 msgid "Cancel"
 msgstr ""
 
@@ -73,26 +74,34 @@ msgstr ""
 msgid "_About Finance Manager"
 msgstr ""
 
-#: src/window.js:61
+#: src/window.js:60
 msgid "A finance manager"
 msgstr ""
 
-#: src/window.js:66
+#: src/window.js:65
 msgid "Learn more about Finance Manager"
 msgstr ""
 
-#: src/window.js:198 src/window.js:209 src/window.js:264
+#: src/window.js:119
+msgid "inflow"
+msgstr ""
+
+#: src/window.js:119
+msgid "outflow"
+msgstr ""
+
+#: src/window.js:197 src/window.js:208 src/window.js:262
 msgid "Delete"
 msgstr ""
 
-#: src/window.js:202
+#: src/window.js:201
 msgid "Delete?"
 msgstr ""
 
-#: src/window.js:203 src/window.js:258
+#: src/window.js:202 src/window.js:256
 msgid "This value will be deleted from your data!"
 msgstr ""
 
-#: src/window.js:257
+#: src/window.js:255
 msgid "Clear History?"
 msgstr ""

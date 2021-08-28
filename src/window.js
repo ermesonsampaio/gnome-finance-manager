@@ -106,17 +106,17 @@ var FinanceManagerWindow = GObject.registerClass({
   _registerCashFlow() {
     const title = this._cash_flow_title.get_buffer().text;
     const value = this._cash_flow_value.value;
-    const type = this._cash_flow_type.get_active_text().toLowerCase();
+    const type = this._cash_flow_type.get_active();
     const { date, timestamp } = this._getDate();
 
     if(!title && !value && !type) return;
 
-    const json = `{ "title": "${title}", "value": ${value}, "type": "${type}", "date": "${date}", "timestamp": "${timestamp}" }`;
+    const json = `{ "title": "${title}", "value": ${value}, "type": ${type}, "date": "${date}", "timestamp": "${timestamp}" }`;
 
     this._history.get_array().add_element(Json.from_string(json));
 
     this._settings.set_string('history', Json.to_string(this._history, false));
-    this._newHistoryRow(title, value, type, date, timestamp);
+    this._newHistoryRow(title, value, (type === 0 ? _('inflow') : _('outflow')), date, timestamp);
 
     this._updateProfit();
     this._sidebar.reveal_child = true;
@@ -133,7 +133,7 @@ var FinanceManagerWindow = GObject.registerClass({
     this._history.get_array().foreach_element((array, index, object) => {
       const data = object.get_object();
 
-      if(data.get_string_member('type').toLowerCase() === 'inflow') {
+      if(data.get_int_member('type') === 0) {
         this._cash_inflow += data.get_double_member('value');
       } else {
         this._cash_outflow += data.get_double_member('value');
@@ -157,7 +157,7 @@ var FinanceManagerWindow = GObject.registerClass({
       this._newHistoryRow(
         data.get_string_member('title'),
         data.get_int_member('value'),
-        data.get_string_member('type'),
+        data.get_int_member('type') === 0 ? _('inflow') : _('outflow'),
         data.get_string_member('date'),
         data.get_string_member('timestamp'),
       );
@@ -236,7 +236,7 @@ var FinanceManagerWindow = GObject.registerClass({
     this._frames.push(frame);
   }
 
-  _deleteHistoryItem(timestamp, frame) {
+  _deleteHistoryItem(timestamp) {
     this._history.get_array().foreach_element((array, index, object) => {
       const data = object.get_object();
 
@@ -265,29 +265,21 @@ var FinanceManagerWindow = GObject.registerClass({
       dialog.hide();
 
       if(res === Gtk.ResponseType.YES) {
-        this._deleteHistoryItem(timestamp);
+        this._history.get_array().foreach_element((array, index, object) => this._frames[index].hide());
+        this._settings.set_string('history', '[]');
+        this._loadHistory();
+        this._updateProfit();
       }
     });
 
-    this._history.get_array().foreach_element((array, index, object) => {
-      const data = object.get_object();
-      this._deleteHistoryItem(data.get_string_member('timestamp'));
-    });
-
-    this._settings.set_string('history', '[]');
-    this._loadHistory();
-    this._updateProfit();
+    dialog.show();
   }
 
   _getDate() {
-    var today = new Date();
-    var dd = String(today.getDate());
-    var mm = String(today.getMonth() + 1);
-    var yyyy = today.getFullYear();
-
+    const date = GLib.DateTime.new_now_local();
     return {
-      date: mm + '/' + dd + '/' + yyyy,
-      timestamp: Date.now(),
+      date: date.format('\%x'),
+      timestamp: date.hash(),
     };
   }
 });

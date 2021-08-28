@@ -19,6 +19,7 @@ msgstr ""
 "Language: pt_BR\n"
 
 #: data/com.ermeso.FinanceManager.desktop.in:3 src/ui/window.ui:11
+#: src/window.js:63
 msgid "Finance Manager"
 msgstr "Gerenciador de Finanças"
 
@@ -62,7 +63,7 @@ msgstr "Saída"
 msgid "Register"
 msgstr "Registrar"
 
-#: src/ui/window.ui:381 src/window.js:208 src/window.js:263
+#: src/ui/window.ui:381 src/window.js:207 src/window.js:261
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -74,26 +75,34 @@ msgstr "_Limpar Histórico"
 msgid "_About Finance Manager"
 msgstr "_Sobre o Gerenciador de Finanças"
 
-#: src/window.js:61
+#: src/window.js:60
 msgid "A finance manager"
 msgstr "Um gerenciador de finanças"
 
-#: src/window.js:66
+#: src/window.js:65
 msgid "Learn more about Finance Manager"
 msgstr "Saiba mais sobre o Gerenciador de Finanças"
 
-#: src/window.js:198 src/window.js:209 src/window.js:264
+#: src/window.js:119
+msgid "inflow"
+msgstr "entrada"
+
+#: src/window.js:119
+msgid "outflow"
+msgstr "saída"
+
+#: src/window.js:197 src/window.js:208 src/window.js:262
 msgid "Delete"
 msgstr "Deletar"
 
-#: src/window.js:202
+#: src/window.js:201
 msgid "Delete?"
 msgstr "Deletar?"
 
-#: src/window.js:203 src/window.js:258
+#: src/window.js:202 src/window.js:256
 msgid "This value will be deleted from your data!"
 msgstr "Esse valor será excluído de seus dados!"
 
-#: src/window.js:257
+#: src/window.js:255
 msgid "Clear History?"
 msgstr "Limpar Histórico?"
